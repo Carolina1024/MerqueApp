@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterActivity">
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:orientation="vertical">
+
+       <io.github.florent37.shapeofview.shapes.ArcView
+           android:layout_width="match_parent"
+           android:layout_height="200dp"
+           android:elevation="4dp"
+           app:shape_arc_height="20dp"
+           app:shape_arc_position="bottom"
+           >
+           
+           <View
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:background="@color/verdemeque"
+               />
+
+           <TextView
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text="REGISTRATE AHORA"
+               android:textAlignment="center"
+               android:textColor="@color/white"
+               android:textSize="22dp"
+               android:textStyle="bold"
+               android:layout_marginTop="15dp"
+
+               />
+
+           <ImageView
+               android:layout_width="150dp"
+               android:layout_height="150dp"
+               android:src="@drawable/ic_baseline_personregister"
+               android:layout_gravity="center"
+               android:layout_marginTop="20dp"
+               />
+
+           <de.hdodenhof.circleimageview.CircleImageView
+               xmlns:app="http://schemas.android.com/apk/res-auto"
+               android:id="@+id/circleimageback"
+               android:layout_width="60dp"
+               android:layout_height="60dp"
+               android:src="@drawable/ic_baseline_arrow_back_24"
+
+               app:civ_border_color="#FF000000"/>
+
+           <!-- YOUR CONTENT -->
+
+       </io.github.florent37.shapeofview.shapes.ArcView>
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal"
+           android:layout_marginTop="35dp"
+           android:layout_marginRight="10dp">
+           <ImageView
+               android:layout_width="40dp"
+               android:layout_height="40dp"
+               android:src="@drawable/usuariotrans"
+               android:layout_marginLeft="10dp"
+               android:layout_marginTop="10dp"
+               />
+           <com.google.android.material.textfield.TextInputLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+               <com.google.android.material.textfield.TextInputEditText
+                   android:id="@+id/textInputEditTextUsername"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:hint="Nombre del usuario"
+                   android:background="@color/verdemeqfono"
+                   android:inputType="text"
+                   />
+
+           </com.google.android.material.textfield.TextInputLayout>
+
+
+
+       </LinearLayout>
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal"
+           android:layout_marginTop="5dp"
+           android:layout_marginRight="10dp">
+           <ImageView
+               android:layout_width="40dp"
+               android:layout_height="40dp"
+               android:src="@drawable/correopng"
+               android:layout_marginLeft="10dp"
+               android:layout_marginTop="10dp"
+               />
+           <com.google.android.material.textfield.TextInputLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+               <com.google.android.material.textfield.TextInputEditText
+                   android:id="@+id/textInputEditTextEmailR"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:hint="Correo electrónico"
+                   android:background="@color/verdemeqfono"
+                   android:inputType="text"
+                   />
+
+           </com.google.android.material.textfield.TextInputLayout>
+
+       </LinearLayout>
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal"
+           android:layout_marginTop="5dp"
+           android:layout_marginRight="10dp">
+           <ImageView
+               android:layout_width="40dp"
+               android:layout_height="40dp"
+               android:src="@drawable/contrasetrans"
+               android:layout_marginLeft="10dp"
+               android:layout_marginTop="10dp"
+               />
+           <com.google.android.material.textfield.TextInputLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+               <com.google.android.material.textfield.TextInputEditText
+                   android:id="@+id/textInputEditTextPasswordR"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:hint="Contraseña"
+                   android:background="@color/verdemeqfono"
+                   android:inputType="text"
+                   />
+
+           </com.google.android.material.textfield.TextInputLayout>
+
+       </LinearLayout>
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal"
+           android:layout_marginTop="5dp"
+           android:layout_marginRight="10dp">
+           <ImageView
+               android:layout_width="40dp"
+               android:layout_height="40dp"
+               android:src="@drawable/confirmcontras"
+               android:layout_marginLeft="10dp"
+               android:layout_marginTop="10dp"
+               />
+           <com.google.android.material.textfield.TextInputLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+               <com.google.android.material.textfield.TextInputEditText
+                   android:id="@+id/textInputEditTextConfirmPassword"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:hint="Confirmar contraseña"
+                   android:background="@color/verdemeqfono"
+                   android:inputType="text"
+                   />
+
+           </com.google.android.material.textfield.TextInputLayout>
+
+       </LinearLayout>
+
+       <Button
+           android:id="@+id/btnregister"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:text="REGISTRARSE"
+           android:layout_marginLeft="50dp"
+           android:layout_marginRight="50dp"
+           android:layout_marginTop="35dp"
+           android:background="@drawable/roundend_button"
+           />
+
+
+
+   </LinearLayout>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
