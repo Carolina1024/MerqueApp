@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "730006141534",
+    "project_id": "kitkat-13980",
+    "storage_bucket": "kitkat-13980.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:730006141534:android:ae0bc84db5dcc02eed52cf",
+        "android_client_info": {
+          "package_name": "com.example.kitkat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "730006141534-vf2jd1cipqd3f0bt61vai4bg5c2el84a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kitkat",
+            "certificate_hash": "f54a178264fb6ef86ab10a8967ddc9f84e74c43d"
+          }
+        },
+        {
+          "client_id": "730006141534-8lvkvel3a8e5g7b45l2guealstha954o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcDeoVGmtm2QR9cRy-WcNov8mWxjikzrg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "730006141534-8lvkvel3a8e5g7b45l2guealstha954o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
