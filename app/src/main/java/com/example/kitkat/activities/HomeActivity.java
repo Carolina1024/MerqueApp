@@ -1,8 +1,10 @@
-package com.example.kitkat;
+package com.example.kitkat.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.kitkat.R;
 
 public class HomeActivity extends AppCompatActivity {
 

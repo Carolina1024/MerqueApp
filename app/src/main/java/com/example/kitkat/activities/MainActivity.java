@@ -1,4 +1,4 @@
-package com.example.kitkat;
+package com.example.kitkat.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +11,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.kitkat.R;
+import com.example.kitkat.models.User;
+import com.example.kitkat.providers.AuthProviders;
+import com.example.kitkat.providers.UsersProvider;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -38,10 +42,10 @@ public class MainActivity extends AppCompatActivity {
     TextInputEditText mTextInputEditTextPassword;
     Button mButtonLogin;
     SignInButton mbtngoogle;
-    FirebaseAuth mAuth;
+    AuthProviders mAuthProviders;
     private GoogleSignInClient mGoogleSignInClient;
     private final int REQUEST_CODE_GOOGLE=1;
-    FirebaseFirestore mFirestore;
+    UsersProvider mUsersproviders;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +58,8 @@ public class MainActivity extends AppCompatActivity {
         mButtonLogin=findViewById(R.id.btnlogin);
         mbtngoogle=findViewById(R.id.btnloginSignInGoogle);
 
-        mAuth=FirebaseAuth.getInstance();
-        mFirestore=FirebaseFirestore.getInstance();
+       mAuthProviders=new AuthProviders();
+       mUsersproviders=new UsersProvider();
 
         mbtngoogle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,22 +108,21 @@ public class MainActivity extends AppCompatActivity {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
 
-                firebaseAuthWithGoogle(account.getIdToken());
+                firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
                 Log.w("ERROR", "Google sign in failed", e);
             }
         }
     }
-    private void firebaseAuthWithGoogle(String idToken) {
-        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
-        mAuth.signInWithCredential(credential)
+    private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
+        mAuthProviders.googleLogin(account)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
 
-                            String id = mAuth.getCurrentUser().getUid();
+                            String id = mAuthProviders.getUid();
                             checkUserExist(id);
                             // inicio de sesion correcto, actualice la interfaz de usuario con la
                             // informacion del usuario que inicio sesion
@@ -134,17 +137,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void checkUserExist(final String id) {
-        mFirestore.collection("Users").document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        mUsersproviders.getUser(id).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if(documentSnapshot.exists()){
                     Intent intent=new Intent(MainActivity.this, HomeActivity.class);
                     startActivity(intent);
                 }else{
-                    String email=mAuth.getCurrentUser().getEmail();
-                    Map<String, Object>map=new HashMap<>();
-                    map.put("email", email);
-                    mFirestore.collection("Users").document(id).set(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    String email=mAuthProviders.getEmail();
+                    User user=new User();
+                    user.setEmail(email);
+                    user.setId(id);
+                    //Map<String, Object>map=new HashMap<>();
+                    //map.put("email", email);
+                    mUsersproviders.create(user)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                            if(task.isSuccessful()){
@@ -168,8 +175,8 @@ public class MainActivity extends AppCompatActivity {
 
         String email=mTextInputEditTextEmail.getText().toString();
         String password=mTextInputEditTextPassword.getText().toString();
-
-        mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        mAuthProviders.login(email,password).
+        addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
