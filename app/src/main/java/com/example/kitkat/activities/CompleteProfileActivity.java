@@ -3,6 +3,7 @@ package com.example.kitkat.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -16,11 +17,8 @@ import com.example.kitkat.providers.UsersProvider;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
-import java.util.Map;
+import dmax.dialog.SpotsDialog;
 
 public class CompleteProfileActivity extends AppCompatActivity {
     TextInputEditText mTextInputUsername;
@@ -29,6 +27,7 @@ public class CompleteProfileActivity extends AppCompatActivity {
     //FirebaseFirestore mFirestore;
     AuthProviders mAuthProviders;
     UsersProvider mUsersproviders;
+    AlertDialog mDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +39,11 @@ public class CompleteProfileActivity extends AppCompatActivity {
 
         mAuthProviders=new AuthProviders();
         mUsersproviders=new UsersProvider();
+
+        mDialog=new SpotsDialog.Builder()
+                .setContext(this)
+                .setMessage("Espere un momento....")
+                .setCancelable(false).build();
 
         mButtonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,16 +66,19 @@ public class CompleteProfileActivity extends AppCompatActivity {
         }
     }
 
-    private void updateUser(String username) {
+    private void updateUser(final String username) {
         String id=mAuthProviders.getUid();
         User user=new User();
         user.setUsername(username);
-        user.setEmail(id);
+        user.setId(id);
+        mDialog.show();
         mUsersproviders.update(user).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
+                mDialog.dismiss();
                 if(task.isSuccessful()){
                     Intent intent=new Intent(CompleteProfileActivity.this,HomeActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }else {
                     Toast.makeText(CompleteProfileActivity.this, "No se almaceno el usuario en la base de datos", Toast.LENGTH_SHORT).show();

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">kitkat</string>
+    <string name="hola">Dialog</string>
 </resources>

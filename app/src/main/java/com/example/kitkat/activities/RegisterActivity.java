@@ -3,6 +3,8 @@ package com.example.kitkat.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,15 +18,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import dmax.dialog.SpotsDialog;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -38,6 +37,7 @@ public class RegisterActivity extends AppCompatActivity {
     //FirebaseFirestore mFirestore;
     AuthProviders mAutProvider;
     UsersProvider mUsersProvider;
+    AlertDialog mDialog;
 
 
     @Override
@@ -55,6 +55,11 @@ public class RegisterActivity extends AppCompatActivity {
 
         mAutProvider=new AuthProviders();
         mUsersProvider=new UsersProvider();
+
+        mDialog=new SpotsDialog.Builder()
+                .setContext(this)
+                .setMessage("Espere un momento....")
+                .setCancelable(false).build();
 
         mButtonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,6 +110,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void createUser(final String username, final String email, String password) {
+        mDialog.show();
         mAutProvider.register(email,password)
         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -120,8 +126,12 @@ public class RegisterActivity extends AppCompatActivity {
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
+                            mDialog.dismiss();
                             if(task.isSuccessful()){
                                 Toast.makeText(RegisterActivity.this, "El usuario se almaceno correctamente", Toast.LENGTH_SHORT).show();
+                                Intent intent=new Intent(RegisterActivity.this,HomeActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
 
 
                             }else{
@@ -134,6 +144,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                     Toast.makeText(RegisterActivity.this, "El usuario se registro correctamente", Toast.LENGTH_SHORT).show();
                 }else{
+                    mDialog.dismiss();
                     Toast.makeText(RegisterActivity.this, "No se pudo regisrar el usuario ", Toast.LENGTH_SHORT).show();
                 }
 
