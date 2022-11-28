@@ -5,21 +5,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:background="@drawable/fondotextura1"
     tools:context=".activities.MainActivity">
     
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/verdemeqfono">
+        android:orientation="vertical">
+
 
         <ImageView
             android:layout_width="200dp"
             android:layout_height="180dp"
             android:layout_gravity="center"
-            android:src="@drawable/imagemerqueapp_transparentimage"
+            android:src="@drawable/logo"
             android:layout_marginTop="30dp"
-
 
             />
 
